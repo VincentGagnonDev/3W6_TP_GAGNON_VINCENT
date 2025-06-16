@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using JuliePro.Models;
 
 
 namespace JuliePro.Models.Data
@@ -17,5 +18,6 @@ namespace JuliePro.Models.Data
         }
 
         public DbSet<Speciality> Specialities { get; set; }
+        public DbSet<JuliePro.Models.Trainer> Trainer { get; set; } = default!;
     }
 }
