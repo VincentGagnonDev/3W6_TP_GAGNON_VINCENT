@@ -27,7 +27,7 @@ namespace JuliePro.Models
         public string Photo { get; set; }
 
         [ValidateNever]
-        public Speciality? speciality { get; set; }
+        public Speciality speciality { get; set; }
 
         [ForeignKey("Speciality")]
         public int SpecialityId { get; set; }

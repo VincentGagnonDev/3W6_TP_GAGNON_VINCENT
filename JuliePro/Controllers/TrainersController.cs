@@ -35,7 +35,7 @@ namespace JuliePro.Controllers
                 return NotFound();
             }
 
-            var trainer = await _context.Trainer
+            var trainer = await _context.Trainer.Include(t => t.speciality)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (trainer == null)
             {
@@ -48,6 +48,7 @@ namespace JuliePro.Controllers
         // GET: Trainers/Create
         public IActionResult Create()
         {
+            ViewData["specialitylist"] = new SelectList(_context.Specialities, "Id", "Name");
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace JuliePro.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,Photo,SpecialityId")] Trainer trainer)
+        public async Task<IActionResult> Create(Trainer trainer)
         {
             if (ModelState.IsValid)
             {
@@ -126,7 +127,7 @@ namespace JuliePro.Controllers
                 return NotFound();
             }
 
-            var trainer = await _context.Trainer
+            var trainer = await _context.Trainer.Include(t => t.speciality)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (trainer == null)
             {
