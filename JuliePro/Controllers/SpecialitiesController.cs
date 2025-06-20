@@ -126,7 +126,19 @@ namespace JuliePro.Controllers
             var speciality = await _context.Specialities.FindAsync(id);
             if (speciality != null)
             {
-                _context.Specialities.Remove(speciality);
+                foreach(var trainer in _context.Trainer)
+                {
+                    if(trainer.SpecialityId == id)
+                    {
+                        ViewBag.status = "There's at least one Trainer with that speciality.";
+                    }
+                }
+
+                if(ViewBag.status != "There's at least one Trainer with that speciality.")
+                {
+                    _context.Specialities.Remove(speciality);
+                }
+                
             }
 
             await _context.SaveChangesAsync();
