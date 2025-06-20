@@ -22,6 +22,7 @@ namespace JuliePro.Controllers
         // GET: Specialities
         public async Task<IActionResult> Index()
         {
+            ViewBag.ListTrainers = _context.Trainer.ToList();
             return View(await _context.Specialities.ToListAsync());
         }
 

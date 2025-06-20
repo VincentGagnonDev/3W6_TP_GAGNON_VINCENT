@@ -15,7 +15,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th></th>
+            <th>Trainers</th>
         </tr>
     </thead>
     <tbody>
@@ -23,7 +23,19 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
+                
             </td>
+            <td>
+                    @foreach (var trainer in (List<JuliePro.Models.Trainer>)ViewBag.ListTrainers)
+                    {
+                        @if(trainer.SpecialityId == item.Id)
+                        {
+                            <a asp-action="Details" asp-controller="Trainers" asp-route-id="@trainer.Id">
+                                @trainer.FirstName @trainer.LastName 
+                            </a>
+                        }
+                    }
+                </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
