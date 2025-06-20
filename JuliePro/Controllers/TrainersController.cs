@@ -48,7 +48,8 @@ namespace JuliePro.Controllers
         // GET: Trainers/Create
         public IActionResult Create()
         {
-            ViewData["specialitylist"] = new SelectList(_context.Specialities, "Id", "Name");
+            List<Speciality> Spe = _context.Specialities.ToList();
+            ViewBag.SpecialityList = new SelectList(Spe, "Id", "Name");
             return View();
         }
 
@@ -81,6 +82,8 @@ namespace JuliePro.Controllers
             {
                 return NotFound();
             }
+            List<Speciality> Spe = _context.Specialities.ToList();
+            ViewBag.SpecialityList = new SelectList(Spe, "Id", "Name");
             return View(trainer);
         }
 
@@ -89,7 +92,7 @@ namespace JuliePro.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,Photo,SpecialityId")] Trainer trainer)
+        public async Task<IActionResult> Edit(int id, Trainer trainer)
         {
             if (id != trainer.Id)
             {

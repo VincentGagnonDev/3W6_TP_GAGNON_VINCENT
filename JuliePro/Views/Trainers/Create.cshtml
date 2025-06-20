@@ -33,18 +33,11 @@
                 <span asp-validation-for="Photo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SpecialityId" class="control-label"></label>
-                <input asp-for="SpecialityId" class="form-control" />
+                <label asp-for="SpecialityId" class="control-label">Speciality</label>
                 <span asp-validation-for="SpecialityId" class="text-danger"></span>
 
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    @{
-                        for (int i = 0; i < ViewBag.specialitylist.Count; i++)
-                        {
-                            <option value="@ViewBag.specialitylist[i].Id">@ViewBag.specialitylist[i].Name</option>
-                        }
-                    }
+                <select class="form-select" asp-for="SpecialityId" asp-items="ViewBag.SpecialityList">
+                    
                 </select>
 
             </div>
