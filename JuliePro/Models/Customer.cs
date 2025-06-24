@@ -24,6 +24,8 @@ namespace JuliePro.Models
         [Range(100,400)]
         public double StartWeight { get; set; }
 
+        public double endWeight { get; set; }
+
         public List<Objective> Objectives { get; set; } = new List<Objective>();
     }
 }

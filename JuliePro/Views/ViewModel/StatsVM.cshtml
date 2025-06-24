@@ -1,0 +1,63 @@
+﻿@model JuliePro.Models.Data.JulieProDbContext
+
+
+
+
+
+
+
+<h1>Statistics</h1>
+
+<h3>Générale</h3>
+
+<p>Quelle est la distance totale des objectifs de tous les clients? @Model.Objectives.Sum(o=>o.DistanceKm) Km</p>
+
+<p>Quel est le nombre maximum d'objectifs pour un même client? @Model.Objectives.Max()</p>
+
+
+<h1>Les 2 clients les plus vieux et leur âge</h1>
+
+<table>
+	<thead>
+		<th>Nom du client</th>
+		<th>Âge</th>
+	</thead>
+
+	<tbody>
+		@foreach (var client in @Model.Customers.OrderByDescending(c => c.BirthDate).Take(2))
+		{
+			<tr>
+				<td>@client.FirstName @client.LastName</td>
+				<td>@(DateTime.Now.Year - client.BirthDate.Year)</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<h1>Statistiques à propos de Chrystal Lapierre</h1>
+
+<p>
+	Quel est le nombre maximum d'objectifs COMPLÉTÉS par un client de Chrystal Lapierre?
+	@{
+		var chrystal = Model.Trainer.FirstOrDefault(u => u.FirstName == "Chrystal" && u.LastName == "Lapierre");
+		var maxCompleted = chrystal?.Customers
+		.Select(c => c.Objectives.Count(o => o.AchievedDate != null))
+		.DefaultIfEmpty(0)
+		.Max();
+	}
+	@maxCompleted
+</p>
+
+<p>
+	Quel est la moyenne de poids perdu par les clients de l'entaîneur Chrystal Lapierre?
+	@{
+		var chrystaltwo = Model.Trainer.FirstOrDefault(u => u.FirstName == "Chrystal" && u.LastName == "Lapierre");
+		var avgWeightLost = chrystaltwo?.Customers
+		.Select(c => c.StartWeight - c.endWeight)
+		.DefaultIfEmpty(0)
+		.Average();
+	}
+	@avgWeightLost
+</p>
+
+	

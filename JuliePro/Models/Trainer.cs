@@ -31,5 +31,7 @@ namespace JuliePro.Models
 
         [ForeignKey("Speciality")]
         public int SpecialityId { get; set; }
+
+        public List<Customer> Customers { get; set; }
     }
 }
