@@ -106,13 +106,27 @@ namespace JuliePro.Controllers
             if (id == null)
             {
                 return NotFound();
+            } else
+            {
+
             }
 
-            var speciality = await _context.Specialities
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var speciality = await _context.Specialities.FirstOrDefaultAsync(m => m.Id == id);
             if (speciality == null)
             {
                 return NotFound();
+            }
+
+            foreach(var trainer in _context.Trainer)
+            {
+                if (trainer.SpecialityId == speciality.Id)
+                {
+                    ViewBag.status = "There's at least one Trainer with that speciality.";
+                    break;
+                } else
+                {
+                    ViewBag.status = "There's no Trainer with that speciality.";
+                }
             }
 
             return View(speciality);
@@ -126,15 +140,12 @@ namespace JuliePro.Controllers
             var speciality = await _context.Specialities.FindAsync(id);
             if (speciality != null)
             {
-                foreach(var trainer in _context.Trainer)
-                {
-                    if(trainer.SpecialityId == id)
-                    {
-                        ViewBag.status = "There's at least one Trainer with that speciality.";
-                    }
-                }
+                string status = ViewBag.status;
 
-                if(ViewBag.status != "There's at least one Trainer with that speciality.")
+                if (status == "There's at least one Trainer with that speciality.")
+                {
+                    Console.WriteLine("Not possible");
+                } else
                 {
                     _context.Specialities.Remove(speciality);
                 }
